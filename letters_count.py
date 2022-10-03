@@ -15,30 +15,39 @@ all_symbols = []
 same_symbols = []
 count_symbols = {}
 
-text_without_register = text.lower()
+text_lower = text.lower()
 alphabet = string.ascii_letters
 
-for item in text_without_register:
-    if item in string.punctuation or item in string.whitespace:
-        continue
-    all_symbols.append(item)
 
-for letter in alphabet:
-    for symbol in all_symbols:
-        if letter == symbol:
-            same_symbols.append(symbol)
-    if len(same_symbols) == 0:
-        continue
-    letter = same_symbols[0]
-    count = len(same_symbols)
-    count_symbols[letter] = count
+def clear_text(text_without_register):
+    for item in text_without_register:
+        if item in string.punctuation or item in string.whitespace:
+            continue
+        all_symbols.append(item)
 
-    same_symbols.clear()
 
-most_letter = max(count_symbols, key=count_symbols.get)
+def count_letters():
+    for letter in alphabet:
+        for symbol in all_symbols:
+            if letter == symbol:
+                same_symbols.append(symbol)
+        if len(same_symbols) == 0:
+            continue
+        letter = same_symbols[0]
+        count = len(same_symbols)
+        count_symbols[letter] = count
 
-all_values = count_symbols.values()
-count_most_letter = max(all_values)
+        same_symbols.clear()
 
-print("Letter: " + most_letter)
-print("Count: ", count_most_letter)
+
+if __name__ == '__main__':
+    clear_text(text_lower)
+    count_letters()
+
+    most_letter = max(count_symbols, key=count_symbols.get)
+
+    all_values = count_symbols.values()
+    count_most_letter = max(all_values)
+
+    print("Letter: " + most_letter)
+    print("Count: ", count_most_letter)
