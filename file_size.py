@@ -2,7 +2,7 @@ number_bytes = int(input("Write bites: "))
 
 
 def format_bytes(bytes):
-    if bytes < 1024:
+    if 0 <= bytes < 1024:
         print('{:.1f}'.format(bytes) + "B")
     if 1024 <= bytes < 1048576:
         bytes /= 1024
@@ -13,6 +13,8 @@ def format_bytes(bytes):
     if bytes >= 1073741824:
         bytes /= 1073741824
         print('{:.1f}'.format(bytes) + "Gb")
+    else:
+        print("Error")
 
 if __name__ == '__main__':
     format_bytes(number_bytes)
