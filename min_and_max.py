@@ -6,8 +6,8 @@ def min_and_max_value(list_numbers):
     for item in list_numbers:
         try:
             list_without_words.append(int(item))
-        except:
-            print("Error: ", item, "- not number ")
+        except (ValueError, TypeError) as e:
+            print("Error: ", e)
     print("Max value: ", max(list_without_words))
     print("Min value: ", min(list_without_words))
 
