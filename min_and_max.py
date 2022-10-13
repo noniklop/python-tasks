@@ -1,8 +1,5 @@
-numbers = [1, 2, '0', '300', -2.5, 'Dog', True, 0o1256, None]
-list_without_words = []
-
-
 def min_and_max_value(list_numbers):
+    list_without_words = []
     for item in list_numbers:
         try:
             list_without_words.append(int(item))
@@ -13,4 +10,5 @@ def min_and_max_value(list_numbers):
 
 
 if __name__ == '__main__':
+    numbers = [1, 2, '0', '300', -2.5, 'Dog', True, 0o1256, None]
     min_and_max_value(numbers)
