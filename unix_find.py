@@ -1,24 +1,19 @@
 import os
-import argparse
-
-parser = argparse.ArgumentParser()
-parser.add_argument("-n", "--name", type=str)
-args = parser.parse_args()
-
-result_find = []
-tree = os.walk('C:/Users/Vladyslav_Melnychuk1/PycharmProjects/')
 
 
 def find_content(name_content):
-    for i in tree:
-        for x in i:
-            if type(x) == list:
-                for y in x:
-                    if name_content in y:
-                        print(y)
-                        result_find.append(y)
+    for way in tree:
+        for item in way:
+            if isinstance(item, list):
+                for file_name in item:
+                    if name_content in file_name:
+                        print("Founded file: ", file_name)
+                        print("Way to file: ", way[0] + "\n")
+                        result_find.append(file_name)
 
 
 if __name__ == "__main__":
+    tree = os.walk('C:/Users/Vladyslav_Melnychuk1/PycharmProjects')
+    result_find = []
     find_content(".pyc")
     print("Count result: ", len(result_find))
