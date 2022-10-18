@@ -32,6 +32,7 @@ def several_for_loops():
 
 
 def iterate_over_fifteen():
+    #start = time.time()
     range_diff = [0, 3, 5, 6, 9, 10, 12]
     res = 0
     for i in range(0, N, 15):
@@ -40,23 +41,32 @@ def iterate_over_fifteen():
             if v >= N:
                 break
             res += v
+    #end = time.time()
+    #duration = round(end - start, 3)
+    #print(f'iterate_over_fifteen duration is {duration} sec')
     return res
 
 
 def math_formula():
+    start = time.time()
     upper = N - 1
     threes = int(3 * (upper / 3) * ((upper / 3) + 1) / 2)
     fives = int(5 * (upper / 5) * ((upper / 5) + 1) / 2)
     fifteens = int(15 * (upper / 15) * ((upper / 15) + 1) / 2)
     res = threes + fives - fifteens
+    end = time.time()
+    duration = round(end - start, 3)
+    print(f'math_formula duration is {duration} sec')
     return res
 
 
 def run_all_calculations_in_parallel():
     proc1 = multiprocessing.Process(target=simple_iteration)
     proc2 = multiprocessing.Process(target=several_for_loops)
+    proc3 = multiprocessing.Process(target=iterate_over_fifteen())
+    proc4 = multiprocessing.Process(target=math_formula())
 
-    process = (proc1, proc2)
+    process = (proc1, proc2, proc3, proc4)
 
     for proc in process:
         proc.start()
