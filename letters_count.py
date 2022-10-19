@@ -1,11 +1,12 @@
 import string
 
 
-def count_letters():
+def count_letters(target_text):
     all_symbols = []
     same_symbols = []
+    count_symbols = {}
 
-    for item in text.lower():
+    for item in target_text.lower():
         if item.isalpha() is True:
             all_symbols.append(item)
 
@@ -21,6 +22,8 @@ def count_letters():
 
         same_symbols.clear()
 
+    return count_symbols
+
 
 if __name__ == '__main__':
     text = """Python is an interpreted high-level programming language for general-purpose programming. Created by Guido
@@ -33,12 +36,10 @@ if __name__ == '__main__':
            the reference implementation of Python, is open source software and has a community-based development model,
            as do nearly all of Python's other implementations. Python and CPython are managed by the non-profit Python
            Software Foundation. Привет из Харькова! """
-    count_symbols = {}
-    count_letters()
 
-    most_letter = max(count_symbols, key=count_symbols.get)
+    most_letter = max(count_letters(text), key=count_letters(text).get)
 
-    all_values = count_symbols.values()
+    all_values = count_letters(text).values()
     count_most_letter = max(all_values)
 
     print("Letter: " + most_letter)
