@@ -14,20 +14,28 @@ class Company(object):
         self.__money = 1000
 
     def add_employee(self, employee):
-        # make sure employee is an instance of Engineer or Manager
-        # make sure he is not employed already
-        raise NotImplementedError()
+        if employee.is_employed:
+            print(f"Employee {employee.name} has been already employed to {employee.company} company")
+        elif not isinstance(employee, (Engineer, Manager)):
+            print(f"Employee {employee.name} isn't manager or engeneer")
+        else:
+            self.employees.append(employee)
 
     def dismiss_employee(self, employee):
         """
         Dismisses an employee. Employee must be a company member.
         Company should notify employee that he/she was dismissed
         """
-        raise NotImplementedError()
+        if employee in self.employees:
+            self.employees.remove(employee)
+            employee.notify_dismissed()
+        else:
+            print(f"Employee {employee.name} doesn't work in {self.name} company")
 
     def notify_im_leaving(self, employee):
         """ En employee should call this method when leaving a company """
-        raise NotImplementedError()
+        self.employees.remove(employee)
+        print(f"Employee {employee.name} has leaved a {self.name} company")
 
     def do_tasks(self, employee):
         """
@@ -38,7 +46,8 @@ class Company(object):
         """
         # make sure engineer is employed to this company
         # check employee is Engineer
-        raise NotImplementedError()
+        if employee.is_employed and employee is isinstance(employee, Engineer):
+            return 10
 
     def write_reports(self, employee):
         """
@@ -49,29 +58,38 @@ class Company(object):
         """
         # make sure manager is employed to this company
         # check employee is Manager
-        raise NotImplementedError()
+        if employee.is_employed and employee is isinstance(employee, Manager):
+            employee.put_money_into_my_wallet(12)
 
     def make_a_party(self):
         """ Party time! All employees get 5 money """
         # make sure a company is not a bankrupt before and after the party
         # call employee.bonus_to_salary()
-        raise NotImplementedError()
+        # if self.is_bankrupt() is not False:
+        #     self.employees.bonus_to_salary()
+        #     if
 
     def show_money(self):
         """ Displays amount of money that company has """
-        raise NotImplementedError()
+        print(f'{self.name} has {self.__money} money')
 
     def go_bankrupt(self):
         """
         Declare bankruptcy. Company money are drop to 0.
         All employees become unemployed.
         """
-        raise NotImplementedError()
+        self.__money = 0
+        for employee in self.employees:
+            employee.become_unemployed()
 
     @property
     def is_bankrupt(self):
         """ returns True or False """
-        return self.__money <= 0
+        if self.__money <= 0:
+            bankrupt = True
+        else:
+            bankrupt = False
+        return bankrupt
 
     def __repr__(self):
         return 'Company (%s)' % self.name
@@ -99,12 +117,17 @@ class Employee(Person):
         self.__money = 0
 
     def join_company(self, company):
-        # make sure that this person is not employed already
-        raise NotImplementedError()
+        if self.is_employed:
+            print(f"Employee {self.name} has been already employed to {self.company.name} company")
+        else:
+            company.add_employee(self)
+            self.company = company
+            print(f"Employee {self.name} is employed to {self.company.name} company")
 
     def become_unemployed(self):
         """ Leave current company """
-        raise NotImplementedError()
+        self.company.notify_im_leaving(self)
+        self.company = None
 
     def notify_dismissed(self):
         """ Company should call this method when dismissing an employee """
@@ -116,27 +139,36 @@ class Employee(Person):
         """
         # make sure person is employed to same company
         # money + 5
-        raise NotImplementedError()
+        if self.company == company:
+            self.__money += reward
 
     @property
     def is_employed(self):
         """ returns True or False """
-        return self.company is not None
+        if self.company is not None:
+            employed = True
+        else:
+            employed = False
+        return employed
 
     def put_money_into_my_wallet(self, amount):
         """ Adds the indicated amount of money to persons budget """
         # Engineer and Manager will have to use this method to store their
         # salary, because __money is a private attribute
-        raise NotImplementedError()
+        self.__money += amount
 
     def show_money(self):
         """ Shows how much money person has earned """
-        raise NotImplementedError()
+        print(f'{self.name} has {self.__money}')
 
     @abc.abstractmethod
     def do_work(self):
         """ This method requires re-implementation """
-        raise NotImplemented('This method requires re-implementation')
+        if self.is_employed:
+            payment = 10
+            self.put_money_into_my_wallet(payment)
+        else:
+            print(f"Employee {self.name} is unemployed")
 
     def __repr__(self):
         if self.is_employed:
@@ -184,24 +216,24 @@ def check_yourself():
     # Jane is a very good manager. She wants to work for fruits
     jane = Manager('Jane', 30)
     jane.join_company(fruits_company)
-    # Jane works pretty hard. She writes lots of reports
+    #Jane works pretty hard. She writes lots of reports
     jane.do_work()
     jane.do_work()
 
-    # Bill wants Jane to be his manager, he leaves doors and joins fruits
+    #Bill wants Jane to be his manager, he leaves doors and joins fruits
     bill.become_unemployed()
     bill.join_company(fruits_company)
 
-    # doors becomes a bankrupt
+    #doors becomes a bankrupt
     doors_company.go_bankrupt()
-
-    # alex becomes unemployed and goes to fruits
+    #
+    #alex becomes unemployed and goes to fruits
     alex.join_company(fruits_company)
 
-    # fruits company has a celebration party
+    #fruits company has a celebration party
     fruits_company.make_a_party()
 
-    # results
+    #results
     fruits_company.show_money()
     doors_company.show_money()
     alex.show_money()
