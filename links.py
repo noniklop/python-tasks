@@ -10,7 +10,7 @@ def check_url(url):
         print("Target: ", url)
         print("Status: ", status_url.ok, '\n')
         result_list[url] = status_url.ok
-    except Exception:
+    except requests.exceptions.ConnectionError:
         status_url = False
         print("Target: ", url)
         print("Status: ", status_url, '\n')
