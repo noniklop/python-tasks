@@ -1,4 +1,13 @@
 import os
+import argparse
+
+parser = argparse.ArgumentParser()
+
+
+parser.add_argument('-t', '--target', type=str, help='Write what you want to find')
+parser.add_argument('-p', '--place', type=str, help='Where find your target file')
+
+args = parser.parse_args()
 
 
 def find_content(name_content):
@@ -13,7 +22,7 @@ def find_content(name_content):
 
 
 if __name__ == "__main__":
-    tree = os.walk('C:/Users/Vladyslav_Melnychuk1/PycharmProjects')
+    tree = os.walk(args.place)
     result_find = []
-    find_content(".pyc")
+    find_content(args.target)
     print("Count result: ", len(result_find))
