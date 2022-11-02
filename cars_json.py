@@ -2,8 +2,9 @@ import csv
 import json
 
 
-def read_csv():
-    with open('cars.csv') as csvfile:
+def read_csv(filename='cars.csv'):
+    list_cars = []
+    with open(filename) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             list_cars.append(row)
@@ -12,11 +13,10 @@ def read_csv():
     return cars_json
 
 
-def write_json(cars_json):
-    with open('cars.json', "w") as json_file:
+def write_json(cars_json, namefile='cars.json'):
+    with open(namefile, "w") as json_file:
         json_file.write(cars_json)
 
 
 if __name__ == '__main__':
-    list_cars = []
     write_json(read_csv())

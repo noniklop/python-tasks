@@ -22,4 +22,4 @@ def check_valid_ip_re(ip):
 if __name__ == "__main__":
     target_ip = '192.168.0.1'
     print("Status IP: ", check_valid_ip_socket(target_ip))
-    print(f'Assert {target_ip} is', check_valid_ip_re(target_ip))
+    assert target_ip, check_valid_ip_re(target_ip)
