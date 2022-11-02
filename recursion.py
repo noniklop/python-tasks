@@ -4,13 +4,13 @@ def average(target_list):
     return average_from_list
 
 
-def all_content_in_one_list(list_content):
-
+def all_content_in_one_list(list_content, all_content=[]):
     for item in list_content:
         if isinstance(item, int):
             all_content.append(item)
-        if isinstance(item, int):
+        if isinstance(item, list):
             all_content_in_one_list(item)
+    return all_content
 
 
 def stat_value(list_content):
@@ -21,6 +21,5 @@ def stat_value(list_content):
 
 if __name__ == '__main__':
     l = [1, [], 2, [-19, 700, 0, [90, 33, [18, 77, [0, ], -2], 11, 16], -100]]
-    all_content = []
-    all_content_in_one_list(l)
-    stat_value(all_content)
+
+    stat_value(all_content_in_one_list(l))
